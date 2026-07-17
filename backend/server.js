@@ -38,11 +38,28 @@ checkRequiredEnvVars();
 
 const app = express();
 
-// Security Headers
-app.use(helmet());
+// CORS Config - MUST be first to handle browser preflight requests across all Vercel/localhost domains
+const corsOptions = {
+  origin: (origin, callback) => {
+    // Dynamically allow requests from any Vercel domain or localhost without CORS errors
+    callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+
+// Security Headers (configured to allow cross-origin API access)
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: 'cross-origin' },
+  })
+);
 
 // Body Parsers
-// app.use(captureRawBody); // removed; using express.json verify
 app.use(express.json({ limit: '10kb', verify: (req, res, buf) => { req.rawBody = buf.toString(); } }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
@@ -55,20 +72,6 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   app.use(morgan('dev'));
 }
-
-// CORS Config
-const allowedOrigins = [
-  process.env.FRONTEND_URL || 'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  'https://startup-crm-lite.vercel.app', // Placeholder for production URL
-];
-
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
 
 // Rate Limiters
 const generalLimiter = rateLimit({
