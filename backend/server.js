@@ -19,8 +19,9 @@ import leadRoutes from './routes/leadRoutes.js';
 dotenv.config();
 
 // Verify Required Environment Variables
+// Note: PORT is excluded — Railway injects it dynamically at runtime
 const checkRequiredEnvVars = () => {
-  const required = ['MONGODB_URI', 'JWT_SECRET', 'PORT'];
+  const required = ['MONGODB_URI', 'JWT_SECRET'];
   const missing = [];
   required.forEach((variable) => {
     if (!process.env[variable]) {
@@ -30,8 +31,13 @@ const checkRequiredEnvVars = () => {
 
   if (missing.length > 0) {
     console.error(`CRITICAL SETUP ERROR: Missing env variables: ${missing.join(', ')}`);
+    console.error('Set these in your Railway project → Variables tab.');
     process.exit(1);
   }
+
+  console.log('✅ All required environment variables are present.');
+  console.log(`   NODE_ENV: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`   PORT will be: ${process.env.PORT || 5000}`);
 };
 
 checkRequiredEnvVars();
