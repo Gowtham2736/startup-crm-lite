@@ -1,8 +1,15 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+const getBaseUrl = () => {
+  let url = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api';
+  if (url.endsWith('/')) url = url.slice(0, -1);
+  if (!url.endsWith('/api')) url = `${url}/api`;
+  return url;
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api',
+  baseURL: getBaseUrl(),
 });
 
 // Request Interceptor: inject JWT token

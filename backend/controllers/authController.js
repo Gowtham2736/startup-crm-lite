@@ -15,7 +15,6 @@ export const generateToken = (userId) => {
  */
 export const register = async (req, res, next) => {
   try {
-    console.log('🔴 Register raw request payload:', req.rawBody || req.body);
     const { name, email, password } = req.body;
 
     // Check duplicate
@@ -30,12 +29,6 @@ export const register = async (req, res, next) => {
 
     return successResponse(res, { token, user }, 'User registered successfully', 201);
   } catch (error) {
-    console.error('🔴 Register error details:', {
-      name: error.name,
-      message: error.message,
-      code: error.code,
-      stack: error.stack,
-    });
     next(error);
   }
 };
