@@ -49,8 +49,18 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
 };
 
+// Apply CORS middleware globally before anything else (including rate limiters)
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+
+// Handle OPTIONS preflight requests immediately — must be before rate limiters
+// so browsers can complete the CORS handshake without being rate-limited
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Requested-With,Accept,Origin');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(204);
+});
 
 // Security Headers (configured to allow cross-origin API access)
 app.use(
