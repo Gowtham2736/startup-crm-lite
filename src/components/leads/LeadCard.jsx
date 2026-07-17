@@ -3,6 +3,8 @@ import { Mail, Phone, Edit2, Trash2 } from 'lucide-react';
 import StatusBadge from './StatusBadge';
 
 export default function LeadCard({ lead, onEdit, onDelete }) {
+  const leadId = lead?.id ?? lead?._id;
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 p-5 hover:shadow-md transition">
       <div className="flex justify-between items-start mb-3">
@@ -35,7 +37,7 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
           <Edit2 size={16} />
         </button>
         <button 
-          onClick={() => onDelete(lead.id)}
+          onClick={() => onDelete(leadId)}
           className="p-1.5 text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-md transition"
           aria-label="Delete Lead"
         >

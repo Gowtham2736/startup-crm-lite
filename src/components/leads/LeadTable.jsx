@@ -26,8 +26,10 @@ export default function LeadTable({ leads, onEdit, onDelete }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 text-sm">
-            {leads.map((lead) => (
-              <tr key={lead.id} className="hover:bg-gray-50 dark:bg-gray-900 transition">
+            {leads.map((lead) => {
+              const leadId = lead?.id ?? lead?._id;
+              return (
+              <tr key={leadId} className="hover:bg-gray-50 dark:bg-gray-900 transition">
                 <td className="py-4 px-6 font-medium text-gray-900 dark:text-gray-50">{lead.name}</td>
                 <td className="py-4 px-6 text-gray-600 dark:text-gray-400 dark:text-gray-500">{lead.company}</td>
                 <td className="py-4 px-6 text-gray-500 dark:text-gray-400 dark:text-gray-500">
@@ -47,7 +49,7 @@ export default function LeadTable({ leads, onEdit, onDelete }) {
                       <Edit2 size={16} />
                     </button>
                     <button 
-                      onClick={() => onDelete(lead.id)}
+                      onClick={() => onDelete(leadId)}
                       className="p-1.5 text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-md transition"
                       title="Delete"
                     >
@@ -56,7 +58,8 @@ export default function LeadTable({ leads, onEdit, onDelete }) {
                   </div>
                 </td>
               </tr>
-            ))}
+              );
+            })}
           </tbody>
         </table>
       </div>

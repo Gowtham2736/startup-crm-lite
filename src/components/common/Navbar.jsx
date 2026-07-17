@@ -1,9 +1,27 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, LineChart } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { LayoutDashboard, Users, LineChart, LogOut } from 'lucide-react';
 import DarkModeToggle from './DarkModeToggle';
+import { useAuth } from '../../context/AuthContext';
 
 export default function Navbar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  const userInitials = user?.name
+    ? user.name
+        .split(' ')
+        .map((n) => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : 'U';
+
   const navItems = [
     { name: 'Dashboard', path: '/', icon: <LayoutDashboard size={20} /> },
     { name: 'Leads', path: '/leads', icon: <Users size={20} /> },
@@ -43,8 +61,16 @@ export default function Navbar() {
               </NavLink>
             </li>
           ))}
-          <li className="md:hidden">
+          <li className="md:hidden flex items-center gap-1">
             <DarkModeToggle minimal={true} />
+            <button
+              onClick={handleLogout}
+              className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-xl transition-colors"
+              title="Log Out"
+              aria-label="Log Out"
+            >
+              <LogOut size={20} />
+            </button>
           </li>
         </ul>
       </div>
@@ -59,15 +85,28 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* User Card */}
-        <div className="flex items-center gap-3 p-4 border-t border-gray-200 dark:border-gray-800">
-          <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
-            JD
+        {/* User Card & Logout */}
+        <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-3">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="w-9 h-9 flex-shrink-0 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+              {userInitials}
+            </div>
+            <div className="overflow-hidden">
+              <p className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
+                {user?.name || 'Logged In User'}
+              </p>
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate">
+                {user?.email || 'user@startupcrm.com'}
+              </p>
+            </div>
           </div>
-          <div className="overflow-hidden">
-            <p className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">John Doe</p>
-            <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate">john@startup.co</p>
-          </div>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 text-xs font-semibold text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/40 rounded-lg transition-colors border border-red-200 dark:border-red-900/50 shadow-sm"
+          >
+            <LogOut size={15} />
+            <span>Log Out</span>
+          </button>
         </div>
       </div>
     </nav>
