@@ -39,7 +39,8 @@ export default function Login() {
           <div className="mx-auto h-12 w-12 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-md">
             S
           </div>
-          <h2 className="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">Sign in to your account</h2>
+          <h1 className="mt-4 text-2xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">Startup-CRM-Lite</h1>
+          <h2 className="mt-1 text-3xl font-extrabold text-gray-900 dark:text-white">Sign in to your account</h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Or{' '}
             <Link to="/register" className="font-semibold text-blue-600 hover:text-blue-500">
