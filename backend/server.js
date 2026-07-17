@@ -54,7 +54,8 @@ app.use(cors(corsOptions));
 
 // Handle OPTIONS preflight requests immediately — must be before rate limiters
 // so browsers can complete the CORS handshake without being rate-limited
-app.options('*', (req, res) => {
+// Note: Express 5 requires named wildcards — '/{*path}' instead of bare '*'
+app.options('/{*path}', (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS,PATCH');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,X-Requested-With,Accept,Origin');
