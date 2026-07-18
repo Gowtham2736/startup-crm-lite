@@ -36,9 +36,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0b0f19] px-4">
       <div className="max-w-md w-full space-y-8 bg-white dark:bg-[#111827] p-8 rounded-2xl border border-gray-150 dark:border-gray-800 shadow-sm">
         <div className="text-center">
-          <div className="mx-auto h-12 w-12 bg-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-2xl shadow-md">
-          </div>
-          <h1 className="mt-4 text-2xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">Startup-CRM-Lite</h1>
+          <h1 className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">Welcome back</h1>
           <h2 className="mt-1 text-3xl font-extrabold text-gray-900 dark:text-white">Sign in to your account</h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Or{' '}
