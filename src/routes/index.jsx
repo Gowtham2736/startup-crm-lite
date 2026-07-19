@@ -7,6 +7,8 @@ import { useAuth } from '../context/AuthContext';
 const Dashboard = React.lazy(() => import('../pages/Dashboard'));
 const Leads = React.lazy(() => import('../pages/Leads'));
 const Analytics = React.lazy(() => import('../pages/Analytics'));
+const Profile = React.lazy(() => import('../pages/Profile'));
+const Notifications = React.lazy(() => import('../pages/Notifications'));
 const Login = React.lazy(() => import('../pages/Login'));
 const Register = React.lazy(() => import('../pages/Register'));
 const NotFound = React.lazy(() => import('../pages/NotFound'));
@@ -54,6 +56,8 @@ export default function AppRoutes() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/leads" element={<Leads />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/notifications" element={<Notifications />} />
         </Route>
 
         {/* Catch-all 404 Route */}

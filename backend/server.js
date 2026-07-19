@@ -14,6 +14,7 @@ import errorHandler from './middleware/errorHandler.js';
 // Route Imports
 import authRoutes from './routes/authRoutes.js';
 import leadRoutes from './routes/leadRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 // Load Env Variables
 dotenv.config();
@@ -133,6 +134,7 @@ app.get('/api/data', async (req, res) => {
 // Register Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/leads', leadRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Global Error Handler Middleware
 app.use(errorHandler);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, LineChart, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, LineChart, LogOut, Bell } from 'lucide-react';
 import DarkModeToggle from './DarkModeToggle';
 import { useAuth } from '../../context/AuthContext';
 
@@ -26,6 +26,7 @@ export default function Navbar() {
     { name: 'Dashboard', path: '/', icon: <LayoutDashboard size={20} /> },
     { name: 'Leads', path: '/leads', icon: <Users size={20} /> },
     { name: 'Analytics', path: '/analytics', icon: <LineChart size={20} /> },
+    { name: 'Notifications', path: '/notifications', icon: <Bell size={20} /> },
   ];
 
   return (
@@ -87,7 +88,10 @@ export default function Navbar() {
 
         {/* User Card & Logout */}
         <div className="p-4 border-t border-gray-200 dark:border-gray-800 flex flex-col gap-3">
-          <div className="flex items-center gap-3 overflow-hidden">
+          <div 
+            onClick={() => navigate('/profile')}
+            className="flex items-center gap-3 overflow-hidden cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 p-2 rounded-xl transition-colors"
+          >
             <div className="w-9 h-9 flex-shrink-0 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
               {userInitials}
             </div>
@@ -95,8 +99,8 @@ export default function Navbar() {
               <p className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
                 {user?.name || 'Logged In User'}
               </p>
-              <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate">
-                {user?.email || 'user@startupcrm.com'}
+              <p className="text-[10px] text-gray-500 dark:text-gray-400 truncate hover:text-primary transition-colors">
+                View Profile
               </p>
             </div>
           </div>

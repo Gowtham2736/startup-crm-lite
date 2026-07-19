@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Lock, Mail, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import DarkModeToggle from '../components/common/DarkModeToggle';
 
 export default function Login() {
   const { login } = useAuth();
@@ -33,7 +34,10 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0b0f19] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-[#0b0f19] px-4 relative">
+      <div className="absolute top-4 right-4">
+        <DarkModeToggle minimal={false} />
+      </div>
       <div className="max-w-md w-full space-y-8 bg-white dark:bg-[#111827] p-8 rounded-2xl border border-gray-150 dark:border-gray-800 shadow-sm">
         <div className="text-center">
           <h1 className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 tracking-tight">Welcome back</h1>
