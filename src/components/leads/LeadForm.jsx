@@ -48,8 +48,8 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!emailRegex.test(formData.email)) newErrors.email = 'Email is invalid';
-    if (formData.status === 'Won' && (!formData.value || isNaN(formData.value) || Number(formData.value) < 0)) {
-      newErrors.value = 'Valid deal amount is required for won leads';
+    if ((formData.status === 'Won' || formData.status === 'Lost') && (!formData.value || isNaN(formData.value) || Number(formData.value) < 0)) {
+      newErrors.value = 'Valid deal amount is required for won/lost leads';
     }
     
     setErrors(newErrors);
@@ -168,7 +168,7 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
             </div>
           </div>
 
-          {formData.status === 'Won' && (
+          {(formData.status === 'Won' || formData.status === 'Lost') && (
             <div>
               <label htmlFor="value" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Deal Value ($)</label>
               <input 

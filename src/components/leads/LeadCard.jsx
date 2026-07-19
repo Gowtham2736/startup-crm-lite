@@ -26,8 +26,8 @@ export default function LeadCard({ lead, onEdit, onDelete }) {
             <a href={`tel:${lead.phone}`} className="hover:text-primary">{lead.phone}</a>
           </div>
         )}
-        {lead.status === 'Won' && lead.value && (
-          <div className="flex items-center gap-2 font-medium text-green-600 dark:text-green-400 mt-1">
+        {(lead.status === 'Won' || lead.status === 'Lost') && lead.value && (
+          <div className={`flex items-center gap-2 font-medium mt-1 ${lead.status === 'Won' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
             <span>Deal Value: ${lead.value}</span>
           </div>
         )}
