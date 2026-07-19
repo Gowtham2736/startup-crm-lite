@@ -81,6 +81,13 @@ export const createLead = async (req, res, next) => {
   try {
     const body = req.body;
     
+    // Sanitize value if it comes as empty string from frontend
+    if (body.value === '') {
+      delete body.value;
+    } else if (body.value !== undefined) {
+      body.value = Number(body.value);
+    }
+    
     // Automatically set status lifecycle timestamps on creation
     const timeline = {};
     if (body.status === 'Contacted') timeline.contactedAt = new Date();
@@ -123,6 +130,13 @@ export const getLeadById = async (req, res, next) => {
 export const updateLead = async (req, res, next) => {
   try {
     const body = req.body;
+    
+    // Sanitize value if it comes as empty string from frontend
+    if (body.value === '') {
+      delete body.value;
+    } else if (body.value !== undefined) {
+      body.value = Number(body.value);
+    }
     
     // Prevent changing the owner via PUT
     delete body.owner;

@@ -46,15 +46,17 @@ export default function Leads() {
     setIsModalOpen(false);
   };
 
-  const handleSaveLead = (leadData) => {
-    if (selectedLead) {
-      updateLead(selectedLead.id, leadData);
-      toast.success('Lead updated successfully!');
-    } else {
-      addLead(leadData);
-      toast.success('New lead added!');
+  const handleSaveLead = async (leadData) => {
+    try {
+      if (selectedLead) {
+        await updateLead(selectedLead.id, leadData);
+      } else {
+        await addLead(leadData);
+      }
+      handleCloseModal();
+    } catch (error) {
+      // Error is already toasted in context
     }
-    handleCloseModal();
   };
 
   const handleDeleteLead = (id) => {

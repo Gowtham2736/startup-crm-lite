@@ -37,10 +37,17 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'Name must be at least 2 characters';
+    }
+    
     if (!formData.company.trim()) newErrors.company = 'Company is required';
+    
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!formData.email.trim()) newErrors.email = 'Email is required';
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
+    else if (!emailRegex.test(formData.email)) newErrors.email = 'Email is invalid';
     if (formData.status === 'Won' && (!formData.value || isNaN(formData.value) || Number(formData.value) < 0)) {
       newErrors.value = 'Valid deal amount is required for won leads';
     }
@@ -52,7 +59,13 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      onSubmit(formData);
+      const dataToSubmit = { ...formData };
+      if (dataToSubmit.value === '') {
+        delete dataToSubmit.value;
+      } else {
+        dataToSubmit.value = Number(dataToSubmit.value);
+      }
+      onSubmit(dataToSubmit);
     }
   };
 

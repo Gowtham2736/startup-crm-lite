@@ -58,7 +58,8 @@ export function LeadProvider({ children }) {
       }
     } catch (error) {
       console.error('Failed to add lead:', error);
-      toast.error(error.response?.data?.message || 'Failed to create lead.');
+      const errMsg = error.response?.data?.errors?.[0] || error.response?.data?.message || 'Failed to create lead.';
+      toast.error(errMsg);
       throw error;
     }
   };
@@ -76,7 +77,8 @@ export function LeadProvider({ children }) {
       }
     } catch (error) {
       console.error('Failed to update lead:', error);
-      toast.error(error.response?.data?.message || 'Failed to update lead.');
+      const errMsg = error.response?.data?.errors?.[0] || error.response?.data?.message || 'Failed to update lead.';
+      toast.error(errMsg);
       throw error;
     }
   };
