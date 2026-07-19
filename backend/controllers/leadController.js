@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Lead from '../models/Lead.js';
-import Notification from '../models/Notification.js';
 import { successResponse, errorResponse, paginatedResponse } from '../utils/apiResponse.js';
 
 /**
@@ -95,13 +94,6 @@ export const createLead = async (req, res, next) => {
       owner: req.user._id
     });
 
-    await Notification.create({
-      user: req.user._id,
-      message: `New lead created: ${lead.name} from ${lead.company}`,
-      type: 'info',
-      relatedLead: lead._id
-    });
-
     return successResponse(res, lead, 'Lead created successfully', 201);
   } catch (error) {
     next(error);
@@ -147,12 +139,6 @@ export const updateLead = async (req, res, next) => {
       if (body.status === 'Proposal Sent' && !existingLead.proposalAt) body.proposalAt = new Date();
       if (body.status === 'Won' && existingLead.status !== 'Won') {
         body.wonAt = body.wonAt || new Date();
-        await Notification.create({
-          user: req.user._id,
-          message: `Deal Won! You closed ${existingLead.name} (${existingLead.company})`,
-          type: 'success',
-          relatedLead: existingLead._id
-        });
       }
     }
 
@@ -187,11 +173,6 @@ export const updateLeadStatus = async (req, res, next) => {
     if (status === 'Proposal Sent') updateFields.proposalAt = new Date();
     if (status === 'Won') {
       updateFields.wonAt = new Date();
-      await Notification.create({
-        user: req.user._id,
-        message: `Deal Won! You just closed a deal via status update.`,
-        type: 'success'
-      });
     }
 
     const lead = await Lead.findOneAndUpdate(

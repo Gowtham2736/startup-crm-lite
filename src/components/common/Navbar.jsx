@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, Users, LineChart, LogOut, Bell } from 'lucide-react';
+import { LayoutDashboard, Users, LineChart, LogOut } from 'lucide-react';
 import DarkModeToggle from './DarkModeToggle';
 import { useAuth } from '../../context/AuthContext';
 
@@ -26,7 +26,6 @@ export default function Navbar() {
     { name: 'Dashboard', path: '/', icon: <LayoutDashboard size={20} /> },
     { name: 'Leads', path: '/leads', icon: <Users size={20} /> },
     { name: 'Analytics', path: '/analytics', icon: <LineChart size={20} /> },
-    { name: 'Notifications', path: '/notifications', icon: <Bell size={20} /> },
   ];
 
   return (
