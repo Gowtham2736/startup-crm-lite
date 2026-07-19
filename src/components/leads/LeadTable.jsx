@@ -22,6 +22,7 @@ export default function LeadTable({ leads, onEdit, onDelete }) {
               <th className="py-3 px-6 font-medium">Contact</th>
               <th className="py-3 px-6 font-medium">Status</th>
               <th className="py-3 px-6 font-medium">Source</th>
+              <th className="py-3 px-6 font-medium">Value</th>
               <th className="py-3 px-6 font-medium text-right">Actions</th>
             </tr>
           </thead>
@@ -39,6 +40,9 @@ export default function LeadTable({ leads, onEdit, onDelete }) {
                   <StatusBadge status={lead.status} />
                 </td>
                 <td className="py-4 px-6 text-gray-500 dark:text-gray-400 dark:text-gray-500">{lead.source}</td>
+                <td className="py-4 px-6 text-gray-900 dark:text-gray-50">
+                  {lead.status === 'Won' && lead.value ? `$${lead.value}` : '-'}
+                </td>
                 <td className="py-4 px-6 text-right">
                   <div className="flex justify-end gap-2">
                     <button 

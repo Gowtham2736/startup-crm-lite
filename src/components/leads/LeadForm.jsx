@@ -14,7 +14,8 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
     email: '',
     phone: '',
     status: 'New',
-    source: 'Website'
+    source: 'Website',
+    value: ''
   });
   
   const [errors, setErrors] = useState({});
@@ -40,6 +41,9 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
     if (!formData.company.trim()) newErrors.company = 'Company is required';
     if (!formData.email.trim()) newErrors.email = 'Email is required';
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = 'Email is invalid';
+    if (formData.status === 'Won' && (!formData.value || isNaN(formData.value) || Number(formData.value) < 0)) {
+      newErrors.value = 'Valid deal amount is required for won leads';
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -150,6 +154,22 @@ export default function LeadForm({ initialData, onSubmit, onCancel }) {
               </select>
             </div>
           </div>
+
+          {formData.status === 'Won' && (
+            <div>
+              <label htmlFor="value" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Deal Value ($)</label>
+              <input 
+                id="value"
+                type="number" 
+                name="value"
+                value={formData.value}
+                onChange={handleChange}
+                className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none ${errors.value ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'} bg-white dark:bg-gray-800`}
+                placeholder="e.g. 5000"
+              />
+              {errors.value && <p className="text-red-500 text-xs mt-1">{errors.value}</p>}
+            </div>
+          )}
 
           <div className="pt-4 flex justify-end gap-3 border-t border-gray-100 dark:border-gray-800 mt-6 md:mt-auto">
             <button 
